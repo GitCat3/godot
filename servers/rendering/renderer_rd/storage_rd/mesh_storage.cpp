@@ -1626,6 +1626,9 @@ void MeshStorage::_multimesh_allocate_data(RID p_multimesh, int p_instances, RSE
 			mm_flags.set_flag(RD::BUFFER_CREATION_DEVICE_ADDRESS_BIT);
 		}
 		multimesh->buffer = RD::get_singleton()->storage_buffer_create(buffer_size, {}, 0, mm_flags);
+		LocalVector<uint8_t> zeros;
+		zeros.resize_initialized(buffer_size);
+		multimesh->buffer = RD::get_singleton()->storage_buffer_create(buffer_size, zeros.span());
 	}
 
 	multimesh->dependency.changed_notify(Dependency::DEPENDENCY_CHANGED_MULTIMESH);

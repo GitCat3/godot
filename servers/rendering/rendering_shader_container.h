@@ -77,6 +77,8 @@ protected:
 		uint32_t length = 0; // Size of arrays (in total elements), or UBOs (in bytes * total elements). 0 if unbounded.
 		uint32_t writable = 0;
 		uint32_t unbounded = 0; // 1 if runtime-sized array (e.g., sampler2D textures[])
+		RDC::TextureType texture_type = RDC::TEXTURE_TYPE_MAX;
+		RDC::DataFormat texture_format = RDC::DATA_FORMAT_MAX;
 
 		bool operator<(const ReflectionBindingData &p_other) const {
 			return binding < p_other.binding;
@@ -163,10 +165,6 @@ protected:
 		void set_spv_reflect(RDC::ShaderStage p_stage, const T *p_spv);
 	};
 
-	struct ReflectImageTraits {
-		RDC::DataFormat format = RDC::DATA_FORMAT_MAX;
-	};
-
 	struct ReflectUniform : ReflectSymbol<SpvReflectDescriptorBinding> {
 		RDC::UniformType type = RDC::UniformType::UNIFORM_TYPE_MAX;
 		uint32_t binding = 0;
@@ -176,6 +174,8 @@ protected:
 		uint32_t length = 0; // Size of arrays (in total elements), or ubos (in bytes * total elements). 0 if unbounded.
 		bool writable = false;
 		bool unbounded = false; // True for runtime-sized arrays (e.g., sampler2D textures[])
+		RDC::TextureType texture_type = RDC::TEXTURE_TYPE_MAX;
+		RDC::DataFormat texture_format = RDC::DATA_FORMAT_MAX;
 
 		bool operator<(const ReflectUniform &p_other) const {
 			if (binding != p_other.binding) {
